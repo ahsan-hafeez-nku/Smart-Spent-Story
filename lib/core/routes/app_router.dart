@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart_spent_story/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:smart_spent_story/core/routes/route_names.dart';
+import 'package:smart_spent_story/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:smart_spent_story/features/authentication/presentation/pages/login_page.dart';
+import 'package:smart_spent_story/features/authentication/presentation/pages/register_page.dart';
+import 'package:smart_spent_story/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:smart_spent_story/features/intro/presentation/pages/intro_page.dart';
+import 'package:smart_spent_story/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:smart_spent_story/features/profile/presentation/pages/profile_page.dart';
+import 'package:smart_spent_story/features/splash/presentation/pages/splash_page.dart';
+import 'package:smart_spent_story/features/transaction/presentation/pages/add_transaction_page.dart';
+import 'package:smart_spent_story/shared/components/bottom_nav_bar.dart';
 
 class AppRouter {
   final AuthBloc authBloc;
@@ -12,54 +21,33 @@ class AppRouter {
     initialLocation: RouteNames.splash,
     redirect: _redirect,
     routes: [
+      GoRoute(path: RouteNames.splash, builder: (_, __) => const SplashPage()),
+      GoRoute(path: RouteNames.intro, builder: (_, __) => const IntroPage()),
       GoRoute(
-        path: RouteNames.splash,
-        builder: (context, state) => const _SplashPage(),
-      ),
+          path: RouteNames.onboarding,
+          builder: (_, __) => const OnboardingPage()),
+      GoRoute(path: RouteNames.login, builder: (_, __) => const LoginPage()),
       GoRoute(
-        path: RouteNames.onboarding,
-        builder: (context, state) =>
-            const _PlaceholderPage(title: 'Onboarding'),
-      ),
-      GoRoute(
-        path: RouteNames.login,
-        builder: (context, state) => const _PlaceholderPage(title: 'Login'),
-      ),
-      GoRoute(
-        path: RouteNames.register,
-        builder: (context, state) => const _PlaceholderPage(title: 'Register'),
-      ),
+          path: RouteNames.register, builder: (_, __) => const RegisterPage()),
       ShellRoute(
-        builder: (context, state, child) => _MainShell(
-          state: state,
-          child: child,
-        ),
+        builder: (_, state, child) => _MainShell(state: state, child: child),
         routes: [
           GoRoute(
-            path: RouteNames.dashboard,
-            builder: (context, state) =>
-                const _PlaceholderPage(title: 'Dashboard'),
-          ),
+              path: RouteNames.dashboard,
+              builder: (_, __) => const DashboardPage()),
           GoRoute(
-            path: RouteNames.analytics,
-            builder: (context, state) =>
-                const _PlaceholderPage(title: 'Analytics'),
-          ),
+              path: RouteNames.analytics,
+              builder: (_, __) => const _PlaceholderPage(title: 'Analytics')),
           GoRoute(
-            path: RouteNames.addTransaction,
-            builder: (context, state) =>
-                const _PlaceholderPage(title: 'Add Transaction'),
-          ),
+              path: RouteNames.addTransaction,
+              builder: (_, __) => const AddTransactionPage()),
           GoRoute(
-            path: RouteNames.transactionList,
-            builder: (context, state) =>
-                const _PlaceholderPage(title: 'Transactions'),
-          ),
+              path: RouteNames.transactionList,
+              builder: (_, __) =>
+                  const _PlaceholderPage(title: 'Transactions')),
           GoRoute(
-            path: RouteNames.profile,
-            builder: (context, state) =>
-                const _PlaceholderPage(title: 'Profile'),
-          ),
+              path: RouteNames.profile,
+              builder: (_, __) => const ProfilePage()),
         ],
       ),
     ],
@@ -71,41 +59,66 @@ class AppRouter {
 
     const publicRoutes = [
       RouteNames.splash,
+      RouteNames.intro,
       RouteNames.onboarding,
       RouteNames.login,
       RouteNames.register,
+      RouteNames.dashboard,
+      RouteNames.addTransaction,
+      RouteNames.profile,
+      RouteNames.analytics,
+      RouteNames.transactionList,
     ];
 
-    final isOnPublicRoute = publicRoutes.contains(location);
-
-    if (!isAuthenticated && !isOnPublicRoute) {
+    if (!isAuthenticated && !publicRoutes.contains(location))
       return RouteNames.login;
-    }
-
     if (isAuthenticated &&
         (location == RouteNames.login || location == RouteNames.register)) {
       return RouteNames.dashboard;
     }
-
     return null;
   }
 }
 
-class _SplashPage extends StatelessWidget {
-  const _SplashPage();
+// ── Shell ──────────────────────────────────────────────────────────────────────
+
+class _MainShell extends StatelessWidget {
+  final GoRouterState state;
+  final Widget child;
+
+  const _MainShell({required this.state, required this.child});
+
+  static const _routes = [
+    RouteNames.dashboard,
+    RouteNames.analytics,
+    RouteNames.addTransaction,
+    RouteNames.transactionList,
+    RouteNames.profile,
+  ];
+
+  int get _currentIndex {
+    final location = state.matchedLocation;
+    final index = _routes.indexWhere(location.startsWith);
+    return index == -1 ? 0 : index;
+  }
+
+  void _onTap(BuildContext context, int index) {
+    context.go(_routes[index]);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'Smart Spent Story',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
+    return Scaffold(
+      body: child,
+      bottomNavigationBar: AppBottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => _onTap(context, index),
       ),
     );
   }
 }
+
+// ── Placeholder ────────────────────────────────────────────────────────────────
 
 class _PlaceholderPage extends StatelessWidget {
   final String title;
@@ -117,82 +130,8 @@ class _PlaceholderPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: Center(
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-      ),
+          child:
+              Text(title, style: Theme.of(context).textTheme.headlineMedium)),
     );
-  }
-}
-
-class _MainShell extends StatelessWidget {
-  final GoRouterState state;
-  final Widget child;
-
-  const _MainShell({required this.state, required this.child});
-
-  int _selectedIndex(String location) {
-    if (location.startsWith(RouteNames.dashboard)) return 0;
-    if (location.startsWith(RouteNames.analytics)) return 1;
-    if (location.startsWith(RouteNames.addTransaction)) return 2;
-    if (location.startsWith(RouteNames.transactionList)) return 3;
-    if (location.startsWith(RouteNames.profile)) return 4;
-    return 0;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final currentIndex = _selectedIndex(state.matchedLocation);
-
-    return Scaffold(
-      body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => _onTap(context, index),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
-            activeIcon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics_outlined),
-            activeIcon: Icon(Icons.analytics),
-            label: 'Analytics',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            activeIcon: Icon(Icons.add_circle),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long_outlined),
-            activeIcon: Icon(Icons.receipt_long),
-            label: 'Transactions',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onTap(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        context.go(RouteNames.dashboard);
-      case 1:
-        context.go(RouteNames.analytics);
-      case 2:
-        context.go(RouteNames.addTransaction);
-      case 3:
-        context.go(RouteNames.transactionList);
-      case 4:
-        context.go(RouteNames.profile);
-    }
   }
 }

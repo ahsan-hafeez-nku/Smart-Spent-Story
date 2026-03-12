@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:go_router/go_router.dart';
+import 'package:smart_spent_story/core/routes/route_names.dart';
 import 'package:smart_spent_story/core/constants/app_colors.dart';
 import 'package:smart_spent_story/core/constants/app_strings.dart';
 
@@ -17,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       if (mounted) {
-        context.go('/onboarding');
+        context.go(RouteNames.intro);
       }
     });
   }
