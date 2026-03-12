@@ -37,18 +37,18 @@
 
 ### Main Features
 
-| Feature | Description |
-|---|---|
-| **Onboarding** | Multi-step walkthrough introducing the app ("Track Every Penny") |
-| **Authentication** | Sign-up, sign-in, and session management |
-| **Dashboard** | Central hub displaying total balance, income/expense summaries, AI insights, spending breakdown by category, upcoming bills, and recent transactions |
-| **Add Transaction** | Expense/Income toggle with custom numpad for amount entry, category selection, and notes |
-| **Analytics** | Average monthly income/expenses with trend percentages, income vs. expenses chart, spending by category donut/bar chart, and savings trend line chart |
-| **Profile** | User information, premium membership badge, lifetime stats (months tracked, transactions, money saved), personal information management, notification preferences, linked bank accounts, security settings (PIN/biometrics), help & support, and sign-out |
-| **Upcoming Bills** | List of recurring bills with amounts and due dates (rent, electricity, internet) |
-| **AI Insights** | Intelligent spending alerts ("You spent 35% more on dining") and positive reinforcement ("Savings up 12%") |
-| **Categories** | Housing, Food, Transport, Entertainment, Health, Other |
-| **Bottom Navigation** | Persistent tab bar: Dashboard, Analytics, Add Transaction, Budgets, Profile |
+| Feature               | Description                                                                                                                                                                                                                                               |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Onboarding**        | Multi-step walkthrough introducing the app ("Track Every Penny")                                                                                                                                                                                          |
+| **Authentication**    | Sign-up, sign-in, and session management                                                                                                                                                                                                                  |
+| **Dashboard**         | Central hub displaying total balance, income/expense summaries, AI insights, spending breakdown by category, upcoming bills, and recent transactions                                                                                                      |
+| **Add Transaction**   | Expense/Income toggle with custom numpad for amount entry, category selection, and notes                                                                                                                                                                  |
+| **Analytics**         | Average monthly income/expenses with trend percentages, income vs. expenses chart, spending by category donut/bar chart, and savings trend line chart                                                                                                     |
+| **Profile**           | User information, premium membership badge, lifetime stats (months tracked, transactions, money saved), personal information management, notification preferences, linked bank accounts, security settings (PIN/biometrics), help & support, and sign-out |
+| **Upcoming Bills**    | List of recurring bills with amounts and due dates (rent, electricity, internet)                                                                                                                                                                          |
+| **AI Insights**       | Intelligent spending alerts ("You spent 35% more on dining") and positive reinforcement ("Savings up 12%")                                                                                                                                                |
+| **Categories**        | Housing, Food, Transport, Entertainment, Health, Other                                                                                                                                                                                                    |
+| **Bottom Navigation** | Persistent tab bar: Dashboard, Analytics, Add Transaction, Budgets, Profile                                                                                                                                                                               |
 
 ### User Flow
 
@@ -75,25 +75,25 @@
 
 ## 2. Tech Stack
 
-| Technology | Purpose | Package |
-|---|---|---|
-| **Flutter** | Cross-platform UI framework | `flutter` |
-| **flutter_bloc** | State management (BLoC pattern) | `flutter_bloc` |
-| **Equatable** | Value equality for entities, models, states, and events | `equatable` |
-| **Dio** | HTTP client for API communication | `dio` |
-| **GetIt** | Service locator for dependency injection | `get_it` |
-| **injectable** | Code generation for DI annotations | `injectable` + `injectable_generator` |
-| **GoRouter** | Declarative routing and navigation | `go_router` |
-| **Hive** | Lightweight, fast local NoSQL storage | `hive` + `hive_flutter` |
-| **SharedPreferences** | Simple key-value persistent storage | `shared_preferences` |
-| **dartz** | Functional programming (Either type for error handling) | `dartz` |
-| **fl_chart** | Beautiful chart rendering (line, bar, pie) | `fl_chart` |
-| **intl** | Internationalization, date/currency formatting | `intl` |
-| **cached_network_image** | Image caching and loading | `cached_network_image` |
-| **flutter_svg** | SVG asset rendering | `flutter_svg` |
-| **google_fonts** | Custom typography | `google_fonts` |
-| **flutter_screenutil** | Responsive design and scaling | `flutter_screenutil` |
-| **logger** | Pretty console logging | `logger` |
+| Technology               | Purpose                                                 | Package                               |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------- |
+| **Flutter**              | Cross-platform UI framework                             | `flutter`                             |
+| **flutter_bloc**         | State management (BLoC pattern)                         | `flutter_bloc`                        |
+| **Equatable**            | Value equality for entities, models, states, and events | `equatable`                           |
+| **Dio**                  | HTTP client for API communication                       | `dio`                                 |
+| **GetIt**                | Service locator for dependency injection                | `get_it`                              |
+| **injectable**           | Code generation for DI annotations                      | `injectable` + `injectable_generator` |
+| **GoRouter**             | Declarative routing and navigation                      | `go_router`                           |
+| **Hive**                 | Lightweight, fast local NoSQL storage                   | `hive` + `hive_flutter`               |
+| **SharedPreferences**    | Simple key-value persistent storage                     | `shared_preferences`                  |
+| **dartz**                | Functional programming (Either type for error handling) | `dartz`                               |
+| **fl_chart**             | Beautiful chart rendering (line, bar, pie)              | `fl_chart`                            |
+| **intl**                 | Internationalization, date/currency formatting          | `intl`                                |
+| **cached_network_image** | Image caching and loading                               | `cached_network_image`                |
+| **flutter_svg**          | SVG asset rendering                                     | `flutter_svg`                         |
+| **google_fonts**         | Custom typography                                       | `google_fonts`                        |
+| **flutter_screenutil**   | Responsive design and scaling                           | `flutter_screenutil`                  |
+| **logger**               | Pretty console logging                                  | `logger`                              |
 
 ---
 
@@ -584,31 +584,31 @@ Each feature is self-contained and follows the same three-layer structure. This 
 
 The outermost layer of a feature. Knows about the external world (APIs, databases, caches).
 
-| Component | Responsibility |
-|---|---|
-| **`models/`** | Data transfer objects (DTOs) that extend domain entities. Include `fromJson()`, `toJson()`, and `toEntity()` methods for serialization. |
-| **`datasources/`** | Interface and implementation for remote (API) and local (Hive/SharedPreferences) data access. |
+| Component           | Responsibility                                                                                                                                                                                |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`models/`**       | Data transfer objects (DTOs) that extend domain entities. Include `fromJson()`, `toJson()`, and `toEntity()` methods for serialization.                                                       |
+| **`datasources/`**  | Interface and implementation for remote (API) and local (Hive/SharedPreferences) data access.                                                                                                 |
 | **`repositories/`** | Concrete implementations of domain repository contracts. Coordinates between remote and local data sources, handles caching strategy, and transforms exceptions into failures using `Either`. |
 
 ### `domain/`
 
 The innermost layer. Pure Dart — no Flutter imports, no package dependencies beyond `equatable` and `dartz`.
 
-| Component | Responsibility |
-|---|---|
-| **`entities/`** | Core business objects. Extend `Equatable` for value equality. Contain only fields and no logic beyond getters. |
-| **`repositories/`** | Abstract classes (contracts) defining data operations the domain expects. |
-| **`usecases/`** | Single-responsibility classes representing one business action. Accept parameters and return `Either<Failure, Type>`. |
+| Component           | Responsibility                                                                                                        |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **`entities/`**     | Core business objects. Extend `Equatable` for value equality. Contain only fields and no logic beyond getters.        |
+| **`repositories/`** | Abstract classes (contracts) defining data operations the domain expects.                                             |
+| **`usecases/`**     | Single-responsibility classes representing one business action. Accept parameters and return `Either<Failure, Type>`. |
 
 ### `presentation/`
 
 The UI layer. Depends on the domain layer via BLoC.
 
-| Component | Responsibility |
-|---|---|
-| **`bloc/`** | Contains the BLoC class, its events, and its states. Receives events from the UI, invokes use cases, and emits new states. |
-| **`pages/`** | Full-screen widgets representing a route. Use `BlocProvider` and `BlocBuilder`/`BlocListener`. |
-| **`widgets/`** | Smaller, reusable UI components specific to the feature. |
+| Component      | Responsibility                                                                                                             |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **`bloc/`**    | Contains the BLoC class, its events, and its states. Receives events from the UI, invokes use cases, and emits new states. |
+| **`pages/`**   | Full-screen widgets representing a route. Use `BlocProvider` and `BlocBuilder`/`BlocListener`.                             |
+| **`widgets/`** | Smaller, reusable UI components specific to the feature.                                                                   |
 
 ---
 
@@ -2515,6 +2515,7 @@ In `domain/usecases/`, create one class per business action. Extend `UseCase<Ret
 ### Step 8: Create BLoC
 
 In `presentation/bloc/`, create three files:
+
 - `feature_event.dart` — all user actions as events
 - `feature_state.dart` — all possible UI states
 - `feature_bloc.dart` — map events to states via use cases
@@ -2537,16 +2538,16 @@ Register new routes in `app_router.dart` and add route constants to `route_names
 
 ### Naming Conventions
 
-| Type | Convention | Example |
-|---|---|---|
-| Files | `snake_case` | `auth_repository_impl.dart` |
-| Classes | `PascalCase` | `AuthRepositoryImpl` |
-| Variables / Functions | `camelCase` | `getCachedUser()` |
-| Constants | `camelCase` | `primaryColor` |
-| Private members | `_camelCase` | `_remoteDatasource` |
-| BLoC events | `PascalCase` with verb | `AuthLoginRequested` |
-| BLoC states | `PascalCase` with adjective | `AuthAuthenticated` |
-| Enums | `PascalCase` / `camelCase` values | `TransactionType.expense` |
+| Type                  | Convention                        | Example                     |
+| --------------------- | --------------------------------- | --------------------------- |
+| Files                 | `snake_case`                      | `auth_repository_impl.dart` |
+| Classes               | `PascalCase`                      | `AuthRepositoryImpl`        |
+| Variables / Functions | `camelCase`                       | `getCachedUser()`           |
+| Constants             | `camelCase`                       | `primaryColor`              |
+| Private members       | `_camelCase`                      | `_remoteDatasource`         |
+| BLoC events           | `PascalCase` with verb            | `AuthLoginRequested`        |
+| BLoC states           | `PascalCase` with adjective       | `AuthAuthenticated`         |
+| Enums                 | `PascalCase` / `camelCase` values | `TransactionType.expense`   |
 
 ### File Naming
 
@@ -2584,7 +2585,7 @@ Register new routes in `app_router.dart` and add route constants to `route_names
 # pubspec.yaml
 name: smart_spent_story
 description: A smart personal finance tracker built with Clean Architecture.
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -2690,15 +2691,15 @@ flutter:
 
 ### Testing Strategy
 
-| Layer | Test Type | Tool |
-|---|---|---|
-| Entities | Unit test | `flutter_test` |
-| Models | Unit test (serialization) | `flutter_test` |
-| Use Cases | Unit test | `mocktail`, `flutter_test` |
-| Repositories | Unit test | `mocktail`, `flutter_test` |
-| BLoC | BLoC test | `bloc_test`, `mocktail` |
-| Widgets | Widget test | `flutter_test` |
-| Full flows | Integration test | `integration_test` |
+| Layer        | Test Type                 | Tool                       |
+| ------------ | ------------------------- | -------------------------- |
+| Entities     | Unit test                 | `flutter_test`             |
+| Models       | Unit test (serialization) | `flutter_test`             |
+| Use Cases    | Unit test                 | `mocktail`, `flutter_test` |
+| Repositories | Unit test                 | `mocktail`, `flutter_test` |
+| BLoC         | BLoC test                 | `bloc_test`, `mocktail`    |
+| Widgets      | Widget test               | `flutter_test`             |
+| Full flows   | Integration test          | `integration_test`         |
 
 ---
 
@@ -2715,16 +2716,16 @@ flutter:
 
 ### Why This Architecture Scales
 
-| Concern | How It's Addressed |
-|---|---|
-| **Feature isolation** | Each feature is self-contained — adding or removing a feature never breaks another. |
-| **Testability** | Every layer is independently testable with mocked dependencies. |
-| **Team parallelism** | Developers can work on separate features simultaneously without merge conflicts. |
-| **Backend changes** | Only the data layer (models + data sources) changes. Domain and presentation remain untouched. |
-| **State management swap** | BLoC can be replaced with Riverpod or Cubit by only modifying the presentation layer. |
-| **Dependency swapping** | Changing from Dio to `http` or from Hive to `sqflite` only affects the data layer. |
-| **White-labeling** | Theme system and constants layer make re-skinning trivial. |
-| **Modularization** | Features can be extracted into standalone Dart packages for multi-app architectures. |
+| Concern                   | How It's Addressed                                                                             |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Feature isolation**     | Each feature is self-contained — adding or removing a feature never breaks another.            |
+| **Testability**           | Every layer is independently testable with mocked dependencies.                                |
+| **Team parallelism**      | Developers can work on separate features simultaneously without merge conflicts.               |
+| **Backend changes**       | Only the data layer (models + data sources) changes. Domain and presentation remain untouched. |
+| **State management swap** | BLoC can be replaced with Riverpod or Cubit by only modifying the presentation layer.          |
+| **Dependency swapping**   | Changing from Dio to `http` or from Hive to `sqflite` only affects the data layer.             |
+| **White-labeling**        | Theme system and constants layer make re-skinning trivial.                                     |
+| **Modularization**        | Features can be extracted into standalone Dart packages for multi-app architectures.           |
 
 ### Horizontal Scaling Pattern
 
