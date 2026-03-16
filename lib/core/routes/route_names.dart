@@ -8,6 +8,7 @@ abstract final class RouteNames {
   static const String analytics = '/analytics';
   static const String addTransaction = '/add-transaction';
   static const String transactionList = '/transactions';
+  static const String aiInsights = '/ai-insights';
   static const String profile = '/profile';
   static const String personalInfo = '/profile/personal-info';
   static const String notificationSettings = '/profile/notifications';

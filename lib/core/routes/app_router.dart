@@ -4,6 +4,8 @@ import 'package:smart_spent_story/core/routes/route_names.dart';
 import 'package:smart_spent_story/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:smart_spent_story/features/authentication/presentation/pages/login_page.dart';
 import 'package:smart_spent_story/features/authentication/presentation/pages/register_page.dart';
+import 'package:smart_spent_story/features/analytics/presentation/pages/analytics_page.dart';
+import 'package:smart_spent_story/features/ai/presentation/pages/ai_insights_page.dart';
 import 'package:smart_spent_story/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:smart_spent_story/features/intro/presentation/pages/intro_page.dart';
 import 'package:smart_spent_story/features/onboarding/presentation/pages/onboarding_page.dart';
@@ -37,10 +39,13 @@ class AppRouter {
               builder: (_, __) => const DashboardPage()),
           GoRoute(
               path: RouteNames.analytics,
-              builder: (_, __) => const _PlaceholderPage(title: 'Analytics')),
+              builder: (_, __) => const AnalyticsPage()),
           GoRoute(
               path: RouteNames.addTransaction,
               builder: (_, __) => const AddTransactionPage()),
+          GoRoute(
+              path: RouteNames.aiInsights,
+              builder: (_, __) => const AiInsightsPage()),
           GoRoute(
               path: RouteNames.transactionList,
               builder: (_, __) =>
@@ -67,6 +72,7 @@ class AppRouter {
       RouteNames.addTransaction,
       RouteNames.profile,
       RouteNames.analytics,
+      RouteNames.aiInsights,
       RouteNames.transactionList,
     ];
 
@@ -92,7 +98,7 @@ class _MainShell extends StatelessWidget {
     RouteNames.dashboard,
     RouteNames.analytics,
     RouteNames.addTransaction,
-    RouteNames.transactionList,
+    RouteNames.aiInsights,
     RouteNames.profile,
   ];
 

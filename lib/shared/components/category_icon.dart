@@ -43,6 +43,14 @@ class CategoryIcon extends StatelessWidget {
         return _CategoryData(Icons.movie_rounded, AppColors.entertainment);
       case 'health':
         return _CategoryData(Icons.favorite_rounded, AppColors.health);
+      case 'shopping':
+        return _CategoryData(Icons.shopping_bag_rounded, AppColors.shopping);
+      case 'education':
+        return _CategoryData(Icons.school_rounded, AppColors.education);
+      case 'utilities':
+        return _CategoryData(Icons.bolt_rounded, AppColors.utilities);
+      case 'other':
+        return _CategoryData(Icons.inventory_2_rounded, AppColors.other);
       default:
         return _CategoryData(Icons.category_rounded, AppColors.other);
     }

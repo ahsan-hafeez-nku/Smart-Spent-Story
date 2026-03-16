@@ -32,7 +32,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     }
 
     if (_currentStep == _totalSteps - 1) {
-      context.go(RouteNames.dashboard);
+      context.go(RouteNames.login);
       return;
     }
 
@@ -130,10 +130,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
       case 0:
         return _OptionsList(
           options: const [
-            'Under 100,000',
-            '100,000 – 250,000',
-            '250,000 – 500,000',
-            'Over 500,000',
+            'Under \$2,000',
+            '\$2,000 – \$5,000',
+            '\$5,000 – \$10,000',
+            'Over \$10,000',
           ],
           selectedIndex: _selectedIncomeRange,
           onOptionTap: (index) {
@@ -188,7 +188,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (_currentStep == 0) {
       return CustomButton(
         label: 'Continue',
-        onPressed: canContinue ? _goNext : _showMissingSelectionMessage,
+        onPressed: canContinue ? _goNext : null,
         width: double.infinity,
       );
     }
@@ -206,7 +206,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         Expanded(
           child: CustomButton(
             label: isLastStep ? 'Finish Setup' : 'Continue',
-            onPressed: canContinue ? _goNext : _showMissingSelectionMessage,
+            onPressed: canContinue ? _goNext : null,
           ),
         ),
       ],

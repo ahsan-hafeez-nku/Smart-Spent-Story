@@ -25,5 +25,8 @@ abstract final class AppColors {
   static const Color transport = Color(0xFF4ECDC4);
   static const Color entertainment = Color(0xFFFFE66D);
   static const Color health = Color(0xFF95E1D3);
+  static const Color shopping = Color(0xFFFF9F43);
+  static const Color education = Color(0xFF54A0FF);
+  static const Color utilities = Color(0xFF48DBFB);
   static const Color other = Color(0xFFA8A8A8);
 }

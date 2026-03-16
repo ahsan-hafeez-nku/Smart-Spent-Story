@@ -5,6 +5,7 @@ import 'package:smart_spent_story/core/constants/app_colors.dart';
 import 'package:smart_spent_story/core/constants/app_fonts.dart';
 import 'package:smart_spent_story/core/extensions/sizedbox_extentions.dart';
 import 'package:smart_spent_story/core/routes/route_names.dart';
+import 'package:smart_spent_story/shared/components/category_icon.dart';
 import 'package:smart_spent_story/shared/widgets/custom_button.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -24,15 +25,15 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   static const _totalSteps = 3;
 
   final List<_CategoryItem> _categories = const [
-    _CategoryItem(Icons.fastfood_rounded, 'Food'),
-    _CategoryItem(Icons.directions_car_rounded, 'Transport'),
-    _CategoryItem(Icons.home_rounded, 'Housing'),
-    _CategoryItem(Icons.movie_filter_rounded, 'Entertainment'),
-    _CategoryItem(Icons.shopping_bag_rounded, 'Shopping'),
-    _CategoryItem(Icons.health_and_safety_rounded, 'Health'),
-    _CategoryItem(Icons.school_rounded, 'Education'),
-    _CategoryItem(Icons.bolt_rounded, 'Utilities'),
-    _CategoryItem(Icons.inbox_rounded, 'Other'),
+    _CategoryItem('Food'),
+    _CategoryItem('Transport'),
+    _CategoryItem('Housing'),
+    _CategoryItem('Entertainment'),
+    _CategoryItem('Shopping'),
+    _CategoryItem('Health'),
+    _CategoryItem('Education'),
+    _CategoryItem('Utilities'),
+    _CategoryItem('Other'),
   ];
 
   @override
@@ -453,10 +454,9 @@ class _CategoryStep extends StatelessWidget {
 }
 
 class _CategoryItem {
-  final IconData icon;
   final String label;
 
-  const _CategoryItem(this.icon, this.label);
+  const _CategoryItem(this.label);
 }
 
 class _CategoryCard extends StatelessWidget {
@@ -488,15 +488,7 @@ class _CategoryCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 18.r,
-              backgroundColor: AppColors.background,
-              child: Icon(
-                item.icon,
-                color: AppColors.primary,
-                size: 20.sp,
-              ),
-            ),
+            CategoryIcon(category: item.label, size: 46.r),
             8.0.height,
             Text(
               item.label,

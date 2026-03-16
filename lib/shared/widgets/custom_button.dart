@@ -29,6 +29,10 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isEnabled = !isLoading && onPressed != null;
+    final disabledBg = AppColors.border;
+    final disabledFg = AppColors.textSecondary;
+
     final child = isLoading
         ? const SizedBox(
             width: 22,
@@ -46,10 +50,20 @@ class CustomButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: textSize?.sp,
                   fontWeight: FontWeight.w600,
-                  color: isOutlined ? AppColors.primary : Colors.white,
+                  color: isOutlined
+                      ? (isEnabled ? AppColors.primary : disabledFg)
+                      : (isEnabled ? Colors.white : disabledFg),
                 ),
               ),
-              if (arrowIcon ?? false) ...[8.0.width, Icon(Icons.arrow_forward)]
+              if (arrowIcon ?? false) ...[
+                8.0.width,
+                Icon(
+                  Icons.arrow_forward,
+                  color: isOutlined
+                      ? (isEnabled ? AppColors.primary : disabledFg)
+                      : (isEnabled ? Colors.white : disabledFg),
+                ),
+              ]
             ],
           );
 
@@ -60,7 +74,9 @@ class CustomButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: isLoading ? null : onPressed,
           style: OutlinedButton.styleFrom(
-            side: const BorderSide(color: AppColors.primary),
+            side: BorderSide(
+              color: isEnabled ? AppColors.primary : disabledBg,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
             ),
@@ -77,7 +93,7 @@ class CustomButton extends StatelessWidget {
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          disabledBackgroundColor: AppColors.primary,
+          disabledBackgroundColor: disabledBg,
           shape: RoundedRectangleBorder(
             borderRadius:
                 BorderRadius.circular(borderRadius ?? AppSpacing.radiusMd),
